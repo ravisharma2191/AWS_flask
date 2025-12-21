@@ -13,8 +13,11 @@
         <input type="text" id="itemName" required><br><br>
         <label>Item UUID</label><br>
         <input type="text" id="itemUUID" required><br><br>
+<<<<<<< HEAD
         <label>Item Hash</label><br>
         <input type="text" id="itemHash" required><br><br>
+=======
+>>>>>>> 1d70dcf (Added Item UUID field to To-Do form)
         <label>Item Description</label><br>
         <textarea id="itemDescription" required></textarea><br><br>
 
@@ -30,13 +33,20 @@
             const itemId = document.getElementById("itemId").value;
             const itemName = document.getElementById("itemName").value;
             const itemUUID = document.getElementById("itemUUID").value;
+<<<<<<< HEAD
             const itemHash = document.getElementById("itemHash").value;
+=======
+>>>>>>> 1d70dcf (Added Item UUID field to To-Do form)
             const itemDescription = document.getElementById("itemDescription").value;
 
             const res = await fetch("/submittodoitem", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+<<<<<<< HEAD
                 body: JSON.stringify({ itemId,itemName,itemUUID,itemHash,itemDescription })
+=======
+                body: JSON.stringify({ itemId,itemName,itemUUID, itemDescription })
+>>>>>>> 1d70dcf (Added Item UUID field to To-Do form)
             });
 
             const data = await res.json();
