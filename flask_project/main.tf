@@ -47,8 +47,8 @@ resource "aws_route_table" "public_rt" {
 
 # Route Table Association
 resource "aws_route_table_association" "rta" {
-  subnet_id      = aws_subnet.public_subnet.id
-  route_table_id = aws_route_table.public_rt.id
+  subnet_id      = subnet-08d813a8e991ed72e
+  route_table_id = rtb-077e55579e5982242
 }
 
 # Security Group
