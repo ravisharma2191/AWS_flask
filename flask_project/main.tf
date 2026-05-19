@@ -3,12 +3,12 @@ provider "aws" {
 }
 
 # VPC
-resource "aws_vpc" "main_vpc" {
-  cidr_block = "10.0.0.0/16"
+provider "aws" {
+  region = "us-east-1"
+}
 
-  tags = {
-    Name = "ravi_vpc_01"
-  }
+data "aws_vpc" "main_vpc" {
+  id = "vpc-0a2a7facd166a2f36"
 }
 
 # Public Subnet
