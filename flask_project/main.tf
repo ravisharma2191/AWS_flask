@@ -3,13 +3,13 @@ provider "aws" {
 }
 
 # Existing VPC
-data "aws_vpc" "main_vpc" {
+data "aws_vpc" "ravi_vpc_01" {
   id = "vpc-0a2a7facd166a2f36"
 }
 
 # Public Subnet
 resource "aws_subnet" "public_subnet" {
-  vpc_id                  = data.aws_vpc.main_vpc.id
+  vpc_id                  = data.aws_vpc.ravi_vpc_01.id
   cidr_block              = "10.0.1.0/16"
   map_public_ip_on_launch = true
 
@@ -20,7 +20,7 @@ resource "aws_subnet" "public_subnet" {
 
 # Internet Gateway
 resource "aws_internet_gateway" "igw" {
-  vpc_id = data.aws_vpc.main_vpc.id
+  vpc_id = data.aws_vpc.ravi_vpc_01.id
 
   tags = {
     Name = "ravi_internet_gateway_01"
@@ -29,7 +29,7 @@ resource "aws_internet_gateway" "igw" {
 
 # Route Table
 resource "aws_route_table" "public_rt" {
-  vpc_id = data.aws_vpc.main_vpc.id
+  vpc_id = data.aws_vpc.ravi_vpc_01.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -50,7 +50,7 @@ resource "aws_route_table_association" "rta" {
 # Security Group
 resource "aws_security_group" "app_sg" {
   name   = "ravi_inbound"
-  vpc_id = data.aws_vpc.main_vpc.id
+  vpc_id = data.aws_vpc.ravi_vpc_01.id
 
   ingress {
     from_port   = 22
