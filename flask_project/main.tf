@@ -31,11 +31,6 @@ resource "aws_route_table" "ravi_route2" {
   }
 }
 
-# Route Table Association
-resource "aws_route_table_association" "rta" {
-  subnet_id      = var.subnet_id
-  route_table_id = aws_route_table.ravi_route2.id
-}
 
 
 # Ubuntu 22.04 AMI
