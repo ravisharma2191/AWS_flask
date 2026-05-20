@@ -14,7 +14,7 @@ resource "aws_subnet" "public_subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "ravi_subnet_02"
+    Name = "ravi_subnet_03"
   }
 }
 
@@ -23,7 +23,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = data.aws_vpc.ravi_vpc_01.id
 
   tags = {
-    Name = "ravi_internet_gateway_01"
+    Name = "ravi_internet_gateway_02"
   }
 }
 
@@ -37,7 +37,7 @@ resource "aws_route_table" "public_rt" {
   }
 
   tags = {
-    Name = "ravi_route2"
+    Name = "ravi_route21"
   }
 }
 
@@ -49,7 +49,7 @@ resource "aws_route_table_association" "rta" {
 
 # Security Group
 resource "aws_security_group" "app_sg" {
-  name   = "ravi_inbound"
+  name   = "ravi_inbound_1"
   vpc_id = data.aws_vpc.ravi_vpc_01.id
 
   ingress {
