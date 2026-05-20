@@ -18,9 +18,6 @@ variable "security_group_id" {
   default = "sg-02213b04ec685f006"
 }
 
-variable "key_name" {
-  default = "your-keypair"
-}
 
 ########################
 # ROUTE TABLE
