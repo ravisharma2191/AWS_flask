@@ -17,6 +17,25 @@ variable "security_group_id" {
   default = "sg-02213b04ec685f006"
 }
 
+# Route Table
+resource "aws_route_table" "ravi_route2" {
+  vpc_id = var.vpc_id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "igw-023864376d041778f"
+  }
+
+  tags = {
+    Name = "ravi_route2"
+  }
+}
+
+# Route Table Association
+resource "aws_route_table_association" "rta" {
+  subnet_id      = var.subnet_id
+  route_table_id = aws_route_table.ravi_route2.id
+}
 
 
 # Ubuntu 22.04 AMI
