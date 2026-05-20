@@ -17,10 +17,7 @@ variable "security_group_id" {
   default = "sg-xxxxxxxx"
 }
 
-# Existing Key Pair
-variable "key_name" {
-  default = "your-keypair-name"
-}
+
 
 # Latest Amazon Linux 2 AMI
 data "aws_ami" "amazon_linux" {
