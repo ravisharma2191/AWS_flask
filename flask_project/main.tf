@@ -1,95 +1,54 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-south-1"
 }
 
 # Existing VPC
-data "aws_vpc" "ravi_vpc_01" {
-  id = "vpc-0a2a7facd166a2f36"
+variable "vpc_id" {
+  default = "vpc-0a2a7facd166a2f36"
 }
 
-# Public Subnet
-resource "aws_subnet" "public_subnet" {
-  vpc_id                  = data.aws_vpc.ravi_vpc_01.id
-  cidr_block              = "10.0.1.0/16"
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name = "ravi_subnet_03"
-  }
+# Existing Public Subnet
+variable "subnet_id" {
+  default = "subnet-xxxxxxxx"
 }
 
-# Internet Gateway
-resource "aws_internet_gateway" "igw" {
-  vpc_id = data.aws_vpc.ravi_vpc_01.id
-
-  tags = {
-    Name = "ravi_internet_gateway_02"
-  }
+# Existing Security Group
+variable "security_group_id" {
+  default = "sg-xxxxxxxx"
 }
 
-# Route Table
-resource "aws_route_table" "public_rt" {
-  vpc_id = data.aws_vpc.ravi_vpc_01.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw.id
-  }
-
-  tags = {
-    Name = "ravi_route21"
-  }
+# Existing Key Pair
+variable "key_name" {
+  default = "your-keypair-name"
 }
 
-# Route Table Association
-resource "aws_route_table_association" "rta" {
-  subnet_id      = aws_subnet.public_subnet.id
-  route_table_id = aws_route_table.public_rt.id
-}
+# Latest Amazon Linux 2 AMI
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
 
-# Security Group
-resource "aws_security_group" "app_sg" {
-  name   = "ravi_inbound_1"
-  vpc_id = data.aws_vpc.ravi_vpc_01.id
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 3000
-    to_port     = 3000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 5000
-    to_port     = 5000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
   }
 }
 
 # EC2 Instance
-resource "aws_instance" "single_ec2" {
-  ami                    = "ami-0c02fb55956c7d316"
+resource "aws_instance" "web_server" {
+  ami                    = data.aws_ami.amazon_linux.id
   instance_type          = "t2.micro"
-  subnet_id              = aws_subnet.public_subnet.id
-  vpc_security_group_ids = [aws_security_group.app_sg.id]
+  subnet_id              = var.subnet_id
+  vpc_security_group_ids = [var.security_group_id]
   key_name               = var.key_name
 
+  associate_public_ip_address = true
+
   tags = {
-    Name = "ravi_ec2"
+    Name = "Ravi-Web-Server"
   }
+}
+
+# Output
+output "instance_public_ip" {
+  value = aws_instance.web_server.public_ip
 }
