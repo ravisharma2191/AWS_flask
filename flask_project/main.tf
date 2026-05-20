@@ -17,11 +17,7 @@ variable "security_group_id" {
   default = "sg-02213b04ec685f006"
 }
 
-# Key Pair
-variable "key_name" {
-  description = "EC2 Key Pair"
-  type        = string
-}
+
 
 # Ubuntu 22.04 AMI
 data "aws_ami" "ubuntu" {
