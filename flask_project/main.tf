@@ -36,10 +36,7 @@ resource "aws_route_table" "ravi_route2" {
   }
 }
 
-resource "aws_route_table_association" "public_assoc" {
-  subnet_id      = var.subnet_id
-  route_table_id = aws_route_table.ravi_route2.id
-}
+
 
 ########################
 # UBUNTU AMI
